@@ -60,6 +60,9 @@ export function BookDetail(props: React.PropsWithoutRef<{ book: IBook }>) {
           <Typography variant={"h5"}>
             简介
           </Typography>
+          {/*
+            Duplicate deliberately for testing sticky position of cover_pic and IntersectionOvserver in the future
+          */}
           <Typography variant={"body1"}>
             {props.book.description}
           </Typography><Typography variant={"body1"}>
