@@ -34,7 +34,7 @@ export interface useEntityState<T> {
 function initEntityState<T>(): useEntityState<T> {
   return {
     data: null,
-    loading: false,
+    loading: true,
     error: null
   }
 }

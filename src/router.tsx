@@ -4,6 +4,7 @@ import {BooksView} from "./views/BooksView";
 import {Container, createStyles, CssBaseline, Theme} from "@material-ui/core";
 import {TopBar} from "./components/TopBar";
 import {makeStyles} from "@material-ui/core/styles";
+import {BookDetailView} from "./views/BookDetailView";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
@@ -23,9 +24,14 @@ export function Router() {
       <div className={classes.root}>
         <Container className={classes.topContainer}>
           <Switch>
-            <Route path={"/"}>
-              <BooksView/>
+            <Route path={"/books/:bookId"}>
+              <BookDetailView/>
             </Route>
+            s <Route path={"/books"}>
+            <BooksView/>
+          </Route><Route path={"/"}>
+            <BooksView/>
+          </Route>
           </Switch>
         </Container>
       </div>

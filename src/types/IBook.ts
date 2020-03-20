@@ -7,4 +7,5 @@ export interface IBook extends IEntity {
   cover_pic: string;
   price: number;
   stock: number;
+  description?: string;
 }

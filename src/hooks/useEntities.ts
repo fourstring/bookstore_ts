@@ -22,7 +22,7 @@ export interface EntitiesResult<T, InputT = T> extends EntitiesState<T> {
 function initEntitiesState<T>(): EntitiesState<T> {
   return {
     entities: new Map<number, T>(),
-    loading: false,
+    loading: true,
     error: null
   }
 }
