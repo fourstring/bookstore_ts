@@ -1,10 +1,13 @@
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import React from "react";
 import {BooksView} from "./views/BooksView";
-import {Container, createStyles, CssBaseline, Theme} from "@material-ui/core";
+import {createStyles, CssBaseline, Grid, Theme} from "@material-ui/core";
 import {TopBar} from "./components/TopBar";
 import {makeStyles} from "@material-ui/core/styles";
 import {BookDetailView} from "./views/BookDetailView";
+import {LoginView} from "./views/LoginView";
+import {AuthRoute} from "./utils/AuthRoute";
+import {CartView} from "./views/CartView";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
@@ -22,18 +25,29 @@ export function Router() {
       <CssBaseline/>
       <TopBar/>
       <div className={classes.root}>
-        <Container className={classes.topContainer}>
-          <Switch>
-            <Route path={"/books/:bookId"}>
-              <BookDetailView/>
-            </Route>
-            s <Route path={"/books"}>
-            <BooksView/>
-          </Route><Route path={"/"}>
-            <BooksView/>
-          </Route>
-          </Switch>
-        </Container>
+        <Grid container>
+          <Grid item xs={undefined} md={2}/>
+          <Grid item xs={12} md={8} container justify={"center"} className={classes.topContainer}>
+            <Switch>
+              <Route path={"/books/:bookId"}>
+                <BookDetailView/>
+              </Route>
+              <Route path={"/books"}>
+                <BooksView/>
+              </Route>
+              <Route path={"/login"}>
+                <LoginView/>
+              </Route>
+              <AuthRoute path={"/cart"}>
+                <CartView/>
+              </AuthRoute>
+              <Route path={"/"}>
+                <BooksView/>
+              </Route>
+            </Switch>
+          </Grid>
+          <Grid item xs={undefined} md={2}/>
+        </Grid>
       </div>
     </BrowserRouter>
   );

@@ -110,7 +110,7 @@ export function initCartsDb() {
     }
   ];
   let cartDb = new Map<number, ICart>();
-  carts.forEach(fillDb<ICart>(cartDb, "owner"));
+  carts.forEach(fillDb<ICart>(cartDb, "id"));
   return {carts, cartDb};
 }
 

@@ -17,6 +17,7 @@ client.interceptors.request.use(config => {
 
 client.interceptors.response.use(response => {
   // TODO: Redirect to login page when returning a 403.
+  
   return response;
 });
 

@@ -1,5 +1,5 @@
-import React, {useMemo, useState} from "react";
-import {Link as RouterLink, useRouteMatch} from "react-router-dom";
+import React, {useContext, useMemo} from "react";
+import {Link as RouterLink, useLocation} from "react-router-dom";
 import {
   AppBar,
   createStyles,
@@ -17,6 +17,8 @@ import {menus} from "./Menu";
 import {makeStyles} from "@material-ui/core/styles";
 import logo from "../logo.svg";
 import {ThemeSwitchButton} from "./ThemeSwitchButton";
+import {UserIndicator} from "./UserIndicator";
+import {UserContext, UserContextType} from "../contexts/UserContext";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   appBar: {
@@ -60,20 +62,22 @@ export function TopBar() {
   const theme = useTheme();
   const isWideScreen = useMediaQuery(theme.breakpoints.up("sm"));
   const classes = useStyles();
-  const match = useRouteMatch();
+  const location = useLocation();
   const pathToIndexMap = useMemo<Map<string, number>>(() => {
     let map = new Map<string, number>();
     menus.forEach((menu, index) => map.set(menu.path, index));
     return map;
   }, []);
-  const [tabIndex, setIndex] = useState<number | undefined>(pathToIndexMap.get(match.path));
+  const tabIndex = pathToIndexMap.get(location.pathname);
+  const {user} = useContext(UserContext) as UserContextType;
+  console.log(location.pathname, tabIndex);
   return (
     <AppBar position={"sticky"} className={classes.appBar}>
       <Toolbar>
         <Grid container alignItems={"baseline"}>
           <Grid item xs={12} className={classes.flex}>
             <div className={classes.inline}>
-              <RouterLink to={"/"} className={classes.link} onClick={event => setIndex(0)}>
+              <RouterLink to={"/"} className={classes.link}>
                 <Grid container alignItems={"center"}>
                   <img src={logo} width={40} alt={""}/>
                   <Typography color={"inherit"} variant={"h6"} noWrap align={"center"}>
@@ -85,7 +89,6 @@ export function TopBar() {
             <Divider flexItem orientation={"vertical"}/>
             {isWideScreen && <Tabs
               value={tabIndex ? tabIndex : 0}
-              onChange={((event, value) => setIndex(value))}
               className={classes.tabs}
               indicatorColor={"primary"}
             >
@@ -100,6 +103,7 @@ export function TopBar() {
               ))}
             </Tabs>}
             <ThemeSwitchButton/>
+            {user && <UserIndicator user={user}/>}
           </Grid>
         </Grid>
       </Toolbar>
