@@ -19,7 +19,7 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import {debounce} from "../../utils/debounce";
 
-const tableIcons: Icons = {
+export const tableIcons: Icons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref}/>),
   Check: forwardRef((props, ref) => <Check {...props} ref={ref}/>),
   Clear: forwardRef((props, ref) => <Clear {...props} ref={ref}/>),

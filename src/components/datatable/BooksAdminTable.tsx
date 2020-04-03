@@ -7,6 +7,7 @@ import {createStyles, Grid, Theme} from "@material-ui/core";
 import {BaseDataTable} from "./BaseDataTable";
 import {IBook} from "../../types/IBook";
 import {makeStyles} from "@material-ui/core/styles";
+import EditIcon from '@material-ui/icons/Edit';
 
 const useStyle = makeStyles((theme: Theme) => createStyles({
   root: {
@@ -61,6 +62,21 @@ export function BooksAdminTable() {
             {
               title: "价格",
               field: "stock"
+            }
+          ]}
+          options={
+            {
+              selection: true,
+              actionsColumnIndex: -1
+            }
+          }
+          actions={[
+            {
+              icon: () => <EditIcon/>,
+              tooltip: '编辑书籍',
+              onClick: (event, data) => {
+              },
+              position: "row"
             }
           ]}
         />
