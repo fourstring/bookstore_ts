@@ -13,7 +13,7 @@ import {
   useMediaQuery,
   useTheme
 } from "@material-ui/core";
-import {menus} from "./Menu";
+import {menus} from "../utils/Menu";
 import {makeStyles} from "@material-ui/core/styles";
 import logo from "../logo.svg";
 import {ThemeSwitchButton} from "./ThemeSwitchButton";

@@ -26,7 +26,7 @@ export function BooksView() {
   return (
     <>
       <Grid item xs={12}>
-        <SearchBar onChange={event => setKeyWord(event.target.value)} debounce={300} searchText={"书籍"}/>
+        <SearchBar onChange={event => setKeyWord(event.target.value)} searchText={"书籍"}/>
       </Grid>
       <Grid>
         <Typography>

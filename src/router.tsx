@@ -8,6 +8,7 @@ import {BookDetailView} from "./views/BookDetailView";
 import {LoginView} from "./views/LoginView";
 import {AuthRoute} from "./utils/AuthRoute";
 import {CartView} from "./views/CartView";
+import {AdminRouter} from "./views/admin/AdminRouter";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
@@ -41,6 +42,9 @@ export function Router() {
               <AuthRoute path={"/cart"}>
                 <CartView/>
               </AuthRoute>
+              <Route path={"/admin"}>
+                <AdminRouter/>
+              </Route>
               <Route path={"/"}>
                 <BooksView/>
               </Route>

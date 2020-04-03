@@ -3,7 +3,7 @@ export const debounce = (fn: any, time: number) => {
 
   return function () {
     // Arrow function inherit this and arguments. And Babel transpile it to ES5.
-    if (arguments[0].target) {
+    if (arguments.length > 0 && arguments[0].target) {
       // Persist Synthetic Event, because React takes event pooling for performance,
       // which cause asynchronous access to event be nullified.
       arguments[0].persist();

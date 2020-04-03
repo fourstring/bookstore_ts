@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import {makeStyles} from "@material-ui/core/styles";
-import {Link} from "react-router-dom";
+import {CustomLink} from "./CustomLink";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   media: {
@@ -41,11 +41,11 @@ export function Book(props: React.PropsWithoutRef<{ book: IBook }>) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Link to={`/books/${props.book.id}`}>
+        <CustomLink to={`/books/${props.book.id}`}>
           <Button color={"primary"} size={"small"} variant={"outlined"}>
             查看详情
           </Button>
-        </Link>
+        </CustomLink>
         <Button color={"secondary"} size={"small"} variant={"contained"}>
           <AddShoppingCartIcon/>
           加入购物车
