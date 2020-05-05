@@ -11,9 +11,9 @@ import {
   Theme,
   Typography
 } from "@material-ui/core";
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import {makeStyles} from "@material-ui/core/styles";
 import {CustomLink} from "./CustomLink";
+import {AddCartButton} from "./AddCartButton";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   media: {
@@ -46,10 +46,7 @@ export function Book(props: React.PropsWithoutRef<{ book: IBook }>) {
             查看详情
           </Button>
         </CustomLink>
-        <Button color={"secondary"} size={"small"} variant={"contained"}>
-          <AddShoppingCartIcon/>
-          加入购物车
-        </Button>
+        <AddCartButton book={props.book}/>
       </CardActions>
     </Card>
   )

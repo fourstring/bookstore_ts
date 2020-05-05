@@ -29,7 +29,8 @@ export function BooksAdminTable() {
     name: "author",
     placeholder: "作者",
     optionFetcher: async () => {
-      let result = await bookService.getAll();
+      let pagedData = await bookService.getAll();
+      let result = pagedData.data;
       return result.map<IDataTableFilterOption>(book => ({label: book.author, value: book.author}))
     }
   });

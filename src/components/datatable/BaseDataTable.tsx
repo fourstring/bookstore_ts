@@ -18,6 +18,7 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import {debounce} from "../../utils/debounce";
+import {IHalPage} from "../../types/IHAL";
 
 export const tableIcons: Icons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref}/>),
@@ -61,14 +62,14 @@ export function BaseDataTable<RowData extends object>({
     <MaterialTable<RowData>
       icons={tableIcons}
       data={async (query) => {
-        let nextPage = query.page + 1; // page of MaterialTable is 0 indexed, different from general pattern.
+        let nextPage = query.page; // page of MaterialTable is 0 indexed, same as Hal of Spring REST.
         let pageSize = query.pageSize; // Ignored, because pagination pattern of backend is unable to determined now.
-        let data = await dataSource.getAll();
+        let {data, page: pageInfo} = await dataSource.getAll();
         let filter = filterParams;
         return {
           data,
-          page: 0,
-          totalCount: data.length // Just for temporary testing.
+          page: (pageInfo as IHalPage).number,
+          totalCount: (pageInfo as IHalPage).totalElements
         }
       }}
       tableRef={tableRef}

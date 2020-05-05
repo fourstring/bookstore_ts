@@ -1,4 +1,5 @@
 export default {
-  baseURL: 'http://localhost:1808',
-  globalMock: true // Whether enabling global mocking requests.
+  baseURL: 'http://localhost:8080',
+  dataApiPrefix: '/data', // Spring Data REST basePath.
+  globalMock: false // Whether enabling global mocking requests.
 }

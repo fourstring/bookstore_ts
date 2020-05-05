@@ -17,7 +17,7 @@ export class AuthService {
 
   async login(cred: IAuthCredential): Promise<IAuthResult> {
     try {
-      let result = await this.client.post<IAuthRespData>('/login', cred);
+      let result = await this.client.post<IAuthRespData>('/auth/login', cred);
       if (result.status >= 200 && result.status <= 299) {
         localStorage.setItem('csrf_token', result.data.csrfToken); // Set csrfToken localStorage for further requests.
         return {status: IAuthStatus.SUCCESS, user: result.data.user}
@@ -31,6 +31,19 @@ export class AuthService {
   async logout() {
     await this.client.get('/logout');
     localStorage.removeItem('csrf_token'); // Clear csrfToken stored.
+  }
+
+  async ping(): Promise<IAuthResult> {
+    try {
+      let result = await this.client.get<IAuthRespData>('/auth/ping');
+      if (result.status >= 200 && result.status <= 299) {
+        localStorage.setItem('csrf_token', result.data.csrfToken); // Set csrfToken localStorage for further requests.
+        return {status: IAuthStatus.SUCCESS, user: result.data.user}
+      }
+      return {status: IAuthStatus.REJECTED, user: null}
+    } catch (e) {
+      return {status: IAuthStatus.REJECTED, user: null}
+    }
   }
 }
 

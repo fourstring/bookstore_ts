@@ -10,8 +10,7 @@ export interface IOrderItem extends IEntity {
 
 export interface IOrder extends IEntity {
   items: IOrderItem[];
-  created_user: IUser;
-  created_time: string;
+  createdUser: IUser;
 }
 
 export interface IOrderItemInput {

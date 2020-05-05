@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {
   Button,
   Card,
@@ -49,6 +49,11 @@ export function LoginView() {
   const {from} = location.state || {from: {pathname: '/'}};
   const [loginFailed, setLoginFailed] = useState(false); // For display of login failed snackbar.
   const [userDisabled, setUserDisabled] = useState(false);
+  if (user) {
+    history.replace(from.pathname as string);
+  }
+  useEffect(() => setUser(null), []);
+
   return (
     <>
       <Snackbar open={userDisabled} autoHideDuration={3000} onClose={() => setUserDisabled(false)}>

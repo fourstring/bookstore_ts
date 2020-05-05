@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 export function BooksView() {
   const classes = useStyles();
   const [searchKeyWord, setKeyWord] = useState<string>("");
-  const {entities, loading, error, useMutate} = useEntities<IBook>(bookService);
+  const {entities, loading, error, issueMutate} = useEntities<IBook>(bookService);
   console.log(entities);
   return (
     <>
