@@ -92,7 +92,7 @@ export function TopBar() {
               className={classes.tabs}
               indicatorColor={"primary"}
             >
-              {menus.map(menu => (
+              {menus.filter(value => !(user && value.anonymousOnly)).map(menu => (
                 <Tab
                   key={menu.path}
                   component={RouterLink}

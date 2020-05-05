@@ -8,7 +8,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     textDecoration: "none",
     "&:visited": {
       color: theme.palette.text.primary
-    }
+    },
+    color: theme.palette.text.primary
   }
 }));
 

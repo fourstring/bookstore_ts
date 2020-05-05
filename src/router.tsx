@@ -9,6 +9,8 @@ import {LoginView} from "./views/LoginView";
 import {AuthRoute} from "./utils/AuthRoute";
 import {CartView} from "./views/CartView";
 import {AdminRouter} from "./views/admin/AdminRouter";
+import {OrdersView} from "./views/OrdersView";
+import {LogoutView} from "./views/LogoutView";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
@@ -41,6 +43,12 @@ export function Router() {
               </Route>
               <AuthRoute path={"/cart"}>
                 <CartView/>
+              </AuthRoute>
+              <AuthRoute path={"/orders"}>
+                <OrdersView/>
+              </AuthRoute>
+              <AuthRoute path={"/logout"}>
+                <LogoutView/>
               </AuthRoute>
               <Route path={"/admin"}>
                 <AdminRouter/>

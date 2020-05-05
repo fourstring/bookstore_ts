@@ -29,8 +29,12 @@ export class AuthService {
   }
 
   async logout() {
-    await this.client.get('/logout');
-    localStorage.removeItem('csrf_token'); // Clear csrfToken stored.
+    try {
+      await this.client.get('/logout');
+    } catch (e) {
+      localStorage.removeItem('csrf_token'); // Clear csrfToken stored.
+    }
+    return true;
   }
 
   async ping(): Promise<IAuthResult> {

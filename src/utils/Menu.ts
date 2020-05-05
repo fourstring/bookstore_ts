@@ -3,7 +3,7 @@ export interface IMenuConfig {
   label: string;
   external?: boolean;
   privileged: boolean; // Only for display.
-  unauthorizedOnly?: boolean;
+  anonymousOnly?: boolean;
 }
 
 export const menus: IMenuConfig[] = [
@@ -26,6 +26,6 @@ export const menus: IMenuConfig[] = [
     label: "登陆",
     path: "/login",
     privileged: false,
-    unauthorizedOnly: true
+    anonymousOnly: true
   }
 ];

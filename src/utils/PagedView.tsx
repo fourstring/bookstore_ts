@@ -6,13 +6,13 @@ import {IRequestFilterOptions} from "../services/ServiceInterfaces";
 import {useEntities} from "../hooks/useEntities";
 import {CircularProgress} from "@material-ui/core";
 
-export function PagedView<T extends IEntity>(props: React.PropsWithChildren<{
-  dataSource: BaseService<T>,
+export function PagedView<T extends IEntity, InputT = T, R = T>(props: React.PropsWithChildren<{
+  dataSource: BaseService<T, InputT, R>,
   filter: Omit<Partial<IRequestFilterOptions>, 'page'>,
   children: (data: Map<number, T>, paginator: JSX.Element) => any
 }>) {
   const [page, setPage] = useState(1); // Pagination component is 1-indexed.
-  const {entities, error, loading, page: pageInfo} = useEntities<T>(props.dataSource, {
+  const {entities, error, loading, page: pageInfo} = useEntities<T, InputT, R>(props.dataSource, {
     page: page - 1,
     ...props.filter
   });

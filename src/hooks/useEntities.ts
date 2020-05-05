@@ -149,7 +149,7 @@ export function useEntities<T extends IEntity, InputT = T, R = T>(service: BaseS
         dispatch({type: EntitiesStateActionType.FETCHING_ENTITIES});
         let pagedData = await service.getAll(filterOption);
         dispatch({
-          type: EntitiesStateActionType.SET_ENTITIES,
+          type: EntitiesStateActionType.REPLACE_ENTITIES,
           data: pagedData.data,
           page: pagedData.page
         });
