@@ -24,3 +24,9 @@ export interface IAuthResult {
 export interface IAuthRedirectState {
   from: Partial<H.Location>;
 }
+
+export interface IRegisterCredential {
+  username: string;
+  password: string;
+  email: string;
+}

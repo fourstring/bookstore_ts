@@ -1,11 +1,11 @@
 import React, {useState} from "react";
-import {IDataTableFilterOutput, IDataTableFilterProps} from "../../types/IDataTable";
+import {IDataTableFilterOutput, IDataTableFilterProps, optionFetcher} from "../../types/IDataTable";
 import {FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
 import {useFilterOptions} from "./useFilterOptions";
 
 export function useSingleFilter(props: IDataTableFilterProps) {
   const [selectedOption, setSelected] = useState<IDataTableFilterOutput | null>({name: props.name, value: ""}); // Use Output interface deliberately.
-  const options = useFilterOptions(props.optionFetcher);
+  const options = useFilterOptions(props.optionFetcher as optionFetcher);
 
   function SingleFilterComponent() {
     return (

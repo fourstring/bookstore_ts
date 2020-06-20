@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {CircularProgress, createStyles, Grid, Slide, Theme, Typography} from "@material-ui/core";
+import {CircularProgress, createStyles, Grid, Slide, Theme} from "@material-ui/core";
 import {SearchBar} from "../components/SearchBar";
 import {useEntities} from "../hooks/useEntities";
 import {IBook} from "../types/IBook";
@@ -21,17 +21,17 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 export function BooksView() {
   const classes = useStyles();
   const [searchKeyWord, setKeyWord] = useState<string>("");
-  const {entities, loading, error, issueMutate} = useEntities<IBook>(bookService);
+  const {entities, loading, error, issueMutate} = useEntities<IBook>(bookService, searchKeyWord ? {
+    search: {
+      by: 'title',
+      value: searchKeyWord
+    }
+  } : {});
   console.log(entities);
   return (
     <>
       <Grid item xs={12}>
         <SearchBar onChange={event => setKeyWord(event.target.value)} searchText={"书籍"}/>
-      </Grid>
-      <Grid>
-        <Typography>
-          {searchKeyWord}
-        </Typography>
       </Grid>
       {loading && <Grid container justify={"center"} className={classes.loadingIndicator}>
         <CircularProgress/>

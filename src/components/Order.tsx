@@ -4,6 +4,7 @@ import {createStyles, Grid, Paper, Theme, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {Image} from "./Image";
 import moment from "moment";
+import {bookService} from "../services/BookService";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
@@ -19,7 +20,7 @@ export function Order(props: React.PropsWithoutRef<{ order: IOrder }>) {
   const classes = useStyles();
   const {order} = props;
   const title = order.items[0].product.title;
-  const coverPic = order.items[0].product.cover_pic;
+  const coverPic = bookService.getCoverPicUrl(order.items[0].product.id);
   const totalCount = order.items.reduce(((previousValue, currentValue) => {
     return previousValue + currentValue.count
   }), 0);

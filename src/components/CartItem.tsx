@@ -3,6 +3,7 @@ import {ICartItem} from "../types/ICart";
 import {createStyles, Grid, TextField, Theme, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {Image} from "./Image";
+import {bookService} from "../services/BookService";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({}));
 
@@ -23,7 +24,7 @@ export function CartItem(props: React.PropsWithoutRef<{
   return (
     <Grid container>
       <Grid item xs={4}>
-        <Image src={product.cover_pic} alt={product.title} width={150}/>
+        <Image src={bookService.getCoverPicUrl(product.id)} alt={product.title} width={150}/>
       </Grid>
       <Grid item container justify={"space-between"} xs={8} direction={"column"}>
         <Grid item>

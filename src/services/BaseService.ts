@@ -5,6 +5,7 @@ import {EntityService, IRequestFilterOptions} from "./ServiceInterfaces";
 import {mockClient} from "../mocks/mockClient";
 import {IHalList, IPagedData} from "../types/IHAL";
 import _ from "lodash";
+import moment from "moment";
 
 
 export class BaseService<T, InputT = T, R = T> implements EntityService<T, InputT, R> {
@@ -18,6 +19,11 @@ export class BaseService<T, InputT = T, R = T> implements EntityService<T, Input
     console.log(config.globalMock);
   }
 
+  transformDate(isoDate?: string): string {
+    return isoDate ? moment(isoDate).format('yyyy年MM月DD日') : '';
+  }
+
+
   transformResource(resource: R): T {
     throw new Error("Method not implemented.");
   }
@@ -27,7 +33,10 @@ export class BaseService<T, InputT = T, R = T> implements EntityService<T, Input
     if (filterOption) {
       let {search, filters, paged, ...params} = filterOption;
       if (search) {
-        params[search.by] = search.value; // searchBy include different endpoint and params.
+        if (search.value) {
+          // Suit for single search, if the search endpoint requires multi param use filters option.
+          params[search.by] = search.value; // searchBy include different endpoint and params.
+        }
         endpoint = `${this.endpoint}/search/searchBy${_.upperFirst(search.by)}`;
       }
       if (filters) {
@@ -71,7 +80,7 @@ export class BaseService<T, InputT = T, R = T> implements EntityService<T, Input
     return this.transformResource(result.data);
   }
 
-  async post(data: InputT): Promise<T> {
+  async post(data: Partial<InputT>): Promise<T> {
     let result = await this.client.post<InputT, AxiosResponse<R>>(this.endpoint, data);
     return this.transformResource(result.data);
   }

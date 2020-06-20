@@ -21,6 +21,7 @@ import {IAuthRedirectState, IAuthStatus} from "../types/IAuth";
 import {UserContext, UserContextType} from "../contexts/UserContext";
 import {useHistory, useLocation} from "react-router-dom";
 import {Alert} from "../components/Alert";
+import {CustomLink} from "../components/CustomLink";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   loginArea: {
@@ -140,6 +141,16 @@ export function LoginView() {
                       >
                         重置
                       </Button>
+                    </Grid>
+                    <Grid item>
+                      <CustomLink to={'/register'}>
+                        <Button
+                          variant={"outlined"}
+                          color={"secondary"}
+                        >
+                          注册
+                        </Button>
+                      </CustomLink>
                     </Grid>
                   </Grid>
                 </CardActions>

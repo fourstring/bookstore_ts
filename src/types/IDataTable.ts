@@ -1,15 +1,17 @@
 import {MaterialTableProps} from "material-table";
-import {EntityService} from "../services/ServiceInterfaces";
+import {EntityService, IRequestFilterOptions} from "../services/ServiceInterfaces";
 
 export interface IDataTableFilterOption {
   label: string;
   value: string | number;
 }
 
+export type optionFetcher = () => Promise<IDataTableFilterOption[]>;
+
 export interface IDataTableFilterProps {
   name: string;
   placeholder?: string;
-  optionFetcher: () => Promise<IDataTableFilterOption[]>;
+  optionFetcher?: optionFetcher;
 }
 
 export interface IDataTableFilterOutput {
@@ -20,8 +22,8 @@ export interface IDataTableFilterOutput {
 export type useFilterResult = [IDataTableFilterOutput | null, JSX.Element];
 
 export interface _IDataTableProps<RowData extends object> extends MaterialTableProps<RowData> {
-  filterInputs: Array<IDataTableFilterOutput | null>;
+  filterOptions: IRequestFilterOptions;
   dataSource: EntityService<RowData>;
 }
 
-export type IDataTableProps<RowData extends object> = Omit<_IDataTableProps<RowData>, 'data' | 'icons' | 'tableRef'>;
+export type IDataTableProps<RowData extends object> = Omit<_IDataTableProps<RowData>, 'data' | 'icons'>;

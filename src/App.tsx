@@ -9,6 +9,8 @@ import {IUser} from "./types/IUser";
 import {authService} from "./services/AuthService";
 import {createBrowserHistory} from "history";
 import {IAuthRedirectState} from "./types/IAuth";
+import {MuiPickersUtilsProvider} from "@material-ui/pickers";
+import MomentUtils from "@date-io/moment";
 
 export const history = createBrowserHistory<IAuthRedirectState>();
 
@@ -23,7 +25,9 @@ function App() {
     <ThemeProvider theme={theme}>
       <ThemeSetterContext.Provider value={setTheme}>
         <UserContext.Provider value={{user, setUser}}>
-          <Router/>
+          <MuiPickersUtilsProvider utils={MomentUtils}>
+            <Router/>
+          </MuiPickersUtilsProvider>
         </UserContext.Provider>
       </ThemeSetterContext.Provider>
     </ThemeProvider>

@@ -22,3 +22,10 @@ export interface IOrderInput {
   items: IOrderItemInput[];
   created_user: number;
 }
+
+export interface IListedOrder extends IEntity {
+  itemsDigest: string;
+  totalCount: number;
+  totalPrice: number;
+  createdUsername: string;
+}

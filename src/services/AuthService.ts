@@ -2,7 +2,7 @@ import {AxiosInstance} from "axios";
 import config from "../config";
 import {mockClient} from "../mocks/mockClient";
 import {client} from "../utils/network";
-import {IAuthCredential, IAuthRespData, IAuthResult, IAuthStatus} from "../types/IAuth";
+import {IAuthCredential, IAuthRespData, IAuthResult, IAuthStatus, IRegisterCredential} from "../types/IAuth";
 
 export class AuthService {
   client: AxiosInstance;
@@ -47,6 +47,30 @@ export class AuthService {
       return {status: IAuthStatus.REJECTED, user: null}
     } catch (e) {
       return {status: IAuthStatus.REJECTED, user: null}
+    }
+  }
+
+  async register(profile: IRegisterCredential): Promise<boolean> {
+    try {
+      let result = await this.client.post('/auth/register', profile);
+      return result.status >= 200 && result.status <= 299;
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  }
+
+  async checkUsername(username: string): Promise<boolean> {
+    try {
+      let result = await this.client.get('/auth/check_username', {
+        params: {
+          username
+        }
+      });
+      return result.status >= 200 && result.status <= 299;
+    } catch (e) {
+      console.log(e);
+      return false;
     }
   }
 }

@@ -19,6 +19,9 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import {debounce} from "../../utils/debounce";
 import {IHalPage} from "../../types/IHAL";
+import {IRequestFilterOptions} from "../../services/ServiceInterfaces";
+import {usePrevious} from "../../hooks/usePrevious";
+import _ from "lodash";
 
 export const tableIcons: Icons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref}/>),
@@ -41,39 +44,46 @@ export const tableIcons: Icons = {
 };
 
 export function BaseDataTable<RowData extends object>({
-                                                        filterInputs,
+                                                        filterOptions,
                                                         dataSource,
+                                                        tableRef,
                                                         ...rest
                                                       }: IDataTableProps<RowData>) {
-  const filterParams = filterInputs.reduce<Record<string, any>>((previousValue, currentValue) => {
-    if (currentValue) {
-      previousValue[currentValue.name] = currentValue.value;
-    }
-    return previousValue;
-  }, {}); // Ignored currently due to unclear pattern of backend filtering.
-  const tableRef = React.useRef<MaterialTable<RowData>>();
+
+  const boundRef = React.useRef<MaterialTable<RowData>>(null);
+  const previousFilters = usePrevious<IRequestFilterOptions>(filterOptions);
   useEffect(debounce(() => {
-    if (tableRef.current) {
+    if (boundRef.current && !_.isEqual(previousFilters, filterOptions)) {
       // @ts-ignore
-      tableRef.current.onQueryChange(); // @ts-ignore because lack of annotation from MaterialTable d.ts
+      boundRef.current.onQueryChange(); // @ts-ignore because lack of annotation from MaterialTable d.ts
     }
-  }, 300), [filterParams]);
+  }, 300), [filterOptions]);
+  useEffect(() => {
+    if (tableRef) {
+      tableRef.current = boundRef.current;
+    }
+  }, [boundRef.current]);
   return (
     <MaterialTable<RowData>
       icons={tableIcons}
       data={async (query) => {
-        let nextPage = query.page; // page of MaterialTable is 0 indexed, same as Hal of Spring REST.
-        let pageSize = query.pageSize; // Ignored, because pagination pattern of backend is unable to determined now.
-        let {data, page: pageInfo} = await dataSource.getAll();
-        let filter = filterParams;
+        const filtersWithPage: IRequestFilterOptions = {
+          ...filterOptions,
+          paged: true,
+          page: query.page,
+          size: query.pageSize,
+          sort: query.orderBy ? `${query.orderBy.field},${query.orderDirection}` : undefined
+        }
+        let {data, page: pageInfo} = await dataSource.getAll(filtersWithPage);
         return {
           data,
           page: (pageInfo as IHalPage).number,
           totalCount: (pageInfo as IHalPage).totalElements
         }
       }}
-      tableRef={tableRef}
-      {...rest}/>
+      tableRef={boundRef}
+      {...rest}
+    />
   )
 
 }

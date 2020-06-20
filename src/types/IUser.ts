@@ -11,3 +11,10 @@ export interface IUser extends IEntity {
   admin: boolean;
   cart?: ICart;
 }
+
+export interface IListedUser extends IEntity {
+  username: string;
+  email: string;
+  status: UserStatus;
+  admin: string;
+}

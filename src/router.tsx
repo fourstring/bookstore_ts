@@ -11,6 +11,7 @@ import {CartView} from "./views/CartView";
 import {AdminRouter} from "./views/admin/AdminRouter";
 import {OrdersView} from "./views/OrdersView";
 import {LogoutView} from "./views/LogoutView";
+import {RegisterView} from "./views/RegisterView";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
@@ -40,6 +41,9 @@ export function Router() {
               </Route>
               <Route path={"/login"}>
                 <LoginView/>
+              </Route>
+              <Route path={'/register'}>
+                <RegisterView/>
               </Route>
               <AuthRoute path={"/cart"}>
                 <CartView/>

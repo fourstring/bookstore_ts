@@ -11,7 +11,7 @@ export interface IRequestFilterOptions {
   projection?: string;
   search?: {
     by: string,
-    value: string | number
+    value?: string | number
   }
   filters?: IDataTableFilterOutput[];
 

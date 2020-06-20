@@ -13,7 +13,7 @@ import {
   useMediaQuery,
   useTheme
 } from "@material-ui/core";
-import {menus} from "../utils/Menu";
+import {IMenuConfig, menus} from "../utils/Menu";
 import {makeStyles} from "@material-ui/core/styles";
 import logo from "../logo.svg";
 import {ThemeSwitchButton} from "./ThemeSwitchButton";
@@ -63,13 +63,36 @@ export function TopBar() {
   const isWideScreen = useMediaQuery(theme.breakpoints.up("sm"));
   const classes = useStyles();
   const location = useLocation();
+  const {user} = useContext(UserContext) as UserContextType;
+  const displayMenus = useMemo<IMenuConfig[]>(() => {
+    return menus.filter(value => {
+      if (value.anonymousOnly) {
+        if (user) {
+          return false;
+        }
+      }
+      if (value.privileged) {
+        if (!(user && user.admin)) {
+          return false;
+        }
+      }
+      return true;
+    });
+  }, [user]);
   const pathToIndexMap = useMemo<Map<string, number>>(() => {
     let map = new Map<string, number>();
-    menus.forEach((menu, index) => map.set(menu.path, index));
+    displayMenus.forEach((menu, index) => map.set(menu.path, index));
     return map;
-  }, []);
-  const tabIndex = pathToIndexMap.get(location.pathname);
-  const {user} = useContext(UserContext) as UserContextType;
+  }, [displayMenus]);
+  let tabIndex = pathToIndexMap.get(location.pathname);
+  if (!tabIndex) {
+    if (location.pathname.startsWith('/admin')) {
+      tabIndex = pathToIndexMap.get('/admin');
+    } else {
+      tabIndex = 0;
+    }
+  }
+
   console.log(location.pathname, tabIndex);
   return (
     <AppBar position={"sticky"} className={classes.appBar}>
@@ -92,7 +115,7 @@ export function TopBar() {
               className={classes.tabs}
               indicatorColor={"primary"}
             >
-              {menus.filter(value => !(user && value.anonymousOnly)).map(menu => (
+              {displayMenus.map(menu => (
                 <Tab
                   key={menu.path}
                   component={RouterLink}

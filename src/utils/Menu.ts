@@ -27,5 +27,11 @@ export const menus: IMenuConfig[] = [
     path: "/login",
     privileged: false,
     anonymousOnly: true
+  },
+  {
+    label: '管理后台',
+    path: '/admin',
+    privileged: true,
+    anonymousOnly: false
   }
 ];

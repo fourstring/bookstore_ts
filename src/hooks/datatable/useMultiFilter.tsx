@@ -1,11 +1,11 @@
 import React, {useState} from "react";
-import {IDataTableFilterProps, useFilterResult} from "../../types/IDataTable";
+import {IDataTableFilterProps, optionFetcher, useFilterResult} from "../../types/IDataTable";
 import {FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
 import {useFilterOptions} from "./useFilterOptions";
 
 export function useMultiFilter(props: IDataTableFilterProps): useFilterResult {
   const [selectedOptions, setSelected] = useState<string[]>([]);
-  const options = useFilterOptions(props.optionFetcher);
+  const options = useFilterOptions(props.optionFetcher as optionFetcher);
 
   return [{
     name: props.name,
