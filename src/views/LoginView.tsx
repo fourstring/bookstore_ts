@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {
   Button,
   Card,
@@ -21,6 +21,7 @@ import {IAuthRedirectState, IAuthStatus} from "../types/IAuth";
 import {UserContext, UserContextType} from "../contexts/UserContext";
 import {useHistory, useLocation} from "react-router-dom";
 import {Alert} from "../components/Alert";
+import {CustomLink} from "../components/CustomLink";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   loginArea: {
@@ -49,6 +50,11 @@ export function LoginView() {
   const {from} = location.state || {from: {pathname: '/'}};
   const [loginFailed, setLoginFailed] = useState(false); // For display of login failed snackbar.
   const [userDisabled, setUserDisabled] = useState(false);
+  if (user) {
+    history.replace(from.pathname as string);
+  }
+  useEffect(() => setUser(null), []);
+
   return (
     <>
       <Snackbar open={userDisabled} autoHideDuration={3000} onClose={() => setUserDisabled(false)}>
@@ -135,6 +141,16 @@ export function LoginView() {
                       >
                         重置
                       </Button>
+                    </Grid>
+                    <Grid item>
+                      <CustomLink to={'/register'}>
+                        <Button
+                          variant={"outlined"}
+                          color={"secondary"}
+                        >
+                          注册
+                        </Button>
+                      </CustomLink>
                     </Grid>
                   </Grid>
                 </CardActions>

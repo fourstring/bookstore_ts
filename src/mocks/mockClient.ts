@@ -11,7 +11,7 @@ const mockClient = axios.create({
 
 const mock = new MockAdapter(mockClient, {delayResponse: 1000});
 
-mock.onGet(/\/books\/\d+/).reply(config => {
+mock.onGet(/\/data\/books\/\d+/).reply(config => {
   const reg = new RegExp(/\/books\/(\d+)/);
   if (config.url) {
     const match = config.url.match(reg);
@@ -23,20 +23,30 @@ mock.onGet(/\/books\/\d+/).reply(config => {
   return [200]
 });
 
-mock.onGet('/books').reply(config1 => {
+mock.onGet('/data/books').reply(config1 => {
   let result = [];
   for (let value of bookDb.values()) {
     result.push(value);
   }
-  return [200, result];
+  return [200, {
+    _embedded: {
+      books: result
+    },
+    page: {
+      size: 20,
+      totalElements: result.length,
+      totalPages: Math.ceil(result.length / 20),
+      number: 0
+    }
+  }];
 });
 
-mock.onGet(/\/carts\/\d+/).reply(config => {
+mock.onGet(/\/data\/carts\/\d+/).reply(config => {
   const {cartDb} = initCartsDb();
   if (!currentUser) {
     return [403]; // mock unauthorized access.
   }
-  const reg = new RegExp(/\/carts\/(\d+)/);
+  const reg = new RegExp(/\/data\/carts\/(\d+)/);
   if (config.url) {
     let match = config.url.match(reg);
     if (match) {
@@ -50,7 +60,7 @@ mock.onGet(/\/carts\/\d+/).reply(config => {
   return [200];
 });
 
-mock.onPost('/login').reply(config => {
+mock.onPost('/auth/login').reply(config => {
   let data = JSON.parse(config.data);
   for (let user of userDb.values()) {
     if (data) {
@@ -63,7 +73,7 @@ mock.onPost('/login').reply(config => {
   return [403]
 });
 
-mock.onGet('/logout').reply(config => {
+mock.onGet('/auth/logout').reply(config => {
   if (!currentUser) {
     return [403]
   }

@@ -1,5 +1,8 @@
 import axios from "axios"
 import config from "../config";
+import {history} from "../App";
+
+const unProtectedPath = ['/', '/books'];
 
 const client = axios.create({
   baseURL: config.baseURL,
@@ -15,10 +18,14 @@ client.interceptors.request.use(config => {
   return config;
 });
 
-client.interceptors.response.use(response => {
-  // TODO: Redirect to login page when returning a 403.
-  
-  return response;
+client.interceptors.response.use(undefined, error => {
+  if (error.status === 403) {
+    if (unProtectedPath.indexOf(history.location.pathname) < 0) {
+      history.push('/login', {
+        from: history.location
+      });
+    }
+  }
 });
 
 export {

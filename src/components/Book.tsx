@@ -11,9 +11,10 @@ import {
   Theme,
   Typography
 } from "@material-ui/core";
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import {makeStyles} from "@material-ui/core/styles";
 import {CustomLink} from "./CustomLink";
+import {AddCartButton} from "./AddCartButton";
+import {bookService} from "../services/BookService";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   media: {
@@ -28,7 +29,7 @@ export function Book(props: React.PropsWithoutRef<{ book: IBook }>) {
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image={props.book.cover_pic}
+          image={bookService.getCoverPicUrl(props.book.id)}
           title={props.book.title}
         />
         <CardContent>
@@ -46,10 +47,7 @@ export function Book(props: React.PropsWithoutRef<{ book: IBook }>) {
             查看详情
           </Button>
         </CustomLink>
-        <Button color={"secondary"} size={"small"} variant={"contained"}>
-          <AddShoppingCartIcon/>
-          加入购物车
-        </Button>
+        <AddCartButton book={props.book}/>
       </CardActions>
     </Card>
   )

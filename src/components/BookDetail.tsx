@@ -1,9 +1,10 @@
 import React from "react";
 import {IBook} from "../types/IBook";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
-import {Button, Divider, Grid, Paper, Typography} from "@material-ui/core";
-import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import {Divider, Grid, Paper, Typography} from "@material-ui/core";
 import {Image} from "./Image";
+import {AddCartButton} from "./AddCartButton";
+import {bookService} from "../services/BookService";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   top: {
@@ -38,7 +39,7 @@ export function BookDetail(props: React.PropsWithoutRef<{ book: IBook }>) {
     <Paper className={classes.top}>
       <Grid className={classes.root} container justify={"center"}>
         <Grid item xs={12} md={4} className={classes.coverPic}>
-          <Image src={props.book.cover_pic} alt={props.book.title}/>
+          <Image src={bookService.getCoverPicUrl(props.book.id)} alt={props.book.title}/>
         </Grid>
         <Grid item xs={12} md={8} container direction={"column"} className={classes.details}>
           <Typography variant={"h5"}>
@@ -48,10 +49,7 @@ export function BookDetail(props: React.PropsWithoutRef<{ book: IBook }>) {
             {props.book.author}
           </Typography>
           <Grid item container className={classes.actions}>
-            <Button color={"secondary"} size={"small"} variant={"contained"} className={classes.addCartButton}>
-              <AddShoppingCartIcon/>
-              加入购物车
-            </Button>
+            <AddCartButton book={props.book} className={classes.addCartButton}/>
             <Typography variant={"h6"}>
               库存{props.book.stock}件
             </Typography>

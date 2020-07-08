@@ -7,6 +7,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PersonIcon from '@material-ui/icons/Person';
 import PaymentIcon from '@material-ui/icons/Payment';
 import AssessmentIcon from '@material-ui/icons/Assessment';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -57,7 +58,12 @@ export function UserIndicator(props: React.PropsWithoutRef<{ user: IUser | null 
             icon: <AssessmentIcon/>,
             text: "管理面板",
             linkTo: "/admin"
-          } : null)
+          } : null),
+          {
+            icon: <ExitToAppIcon/>,
+            text: "登出",
+            linkTo: "/logout"
+          }
         ]}/>
       </>
       }

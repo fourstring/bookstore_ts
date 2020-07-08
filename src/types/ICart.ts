@@ -12,3 +12,17 @@ export interface ICart extends IEntity {
   items: ICartItem[];
   owner: IUser;
 }
+
+export interface ICartItemInput {
+  cart: string;
+  product: string;
+  count: number;
+}
+
+export interface ICartItemResource extends IEntity {
+  count: number;
+  _embedded: {
+    product: IBook,
+    cart: ICart
+  }
+}

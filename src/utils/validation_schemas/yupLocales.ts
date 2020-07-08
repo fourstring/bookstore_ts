@@ -8,5 +8,6 @@ setLocale({
   string: {
     min: ({min}) => `至少应包含${min}个字符`,
     max: ({max}) => `最多包含${max}个字符`,
+    email: params => '不是合法的邮箱地址'
   }
 });
